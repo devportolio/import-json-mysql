@@ -1,0 +1,14 @@
+{
+  "name": "json-to-mysql",
+  "version": "1.0.0",
+  "description": "Convert json to msyql database",
+  "main": "import.js",
+  "scripts": {
+    "dev": "node import.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "github:mysqljs/mysql"
+  }
+}
