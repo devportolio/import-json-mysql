@@ -22,7 +22,14 @@ process.argv.forEach(element => {
   }
 });
 
-connection.query(`DROP TABLE IF EXISTS ${TABLE_NAME};`);
+connection.query(
+  `SELECT count(*) as cnt FROM information_schema.TABLES WHERE TABLE_NAME = '${TABLE_NAME}' AND TABLE_SCHEMA in (SELECT DATABASE());`,
+  (err, data) => {
+    if (data[0].cnt == 1) {
+      connection.query(`DELETE FROM ${TABLE_NAME}`);
+    }
+  }
+);
 fs.readFile(`./source/${FILENAME}`, "utf8", function(err, data) {
   if (err) throw err;
 
