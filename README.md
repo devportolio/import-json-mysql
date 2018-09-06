@@ -14,4 +14,4 @@ const connection = mysql.createConnection({
 
 4. Save the json file that you want to import inside the folder _source_
 5. Run this command to import the file
-node import --table=mytablename --filename=file1.json
+### node import --table=mytablename --filename=file1.json
