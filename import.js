@@ -1,12 +1,5 @@
 const fs = require("fs");
-
-const mysql = require("mysql");
-const connection = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "",
-  database: "json_import"
-});
+const connection = require('./database')
 
 connection.connect();
 let TABLE_NAME = "table1";
