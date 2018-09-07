@@ -25,7 +25,7 @@ process.argv.forEach(element => {
 connection.query(
   `SELECT count(*) as cnt FROM information_schema.TABLES WHERE TABLE_NAME = '${TABLE_NAME}' AND TABLE_SCHEMA in (SELECT DATABASE());`,
   (err, data) => {
-    if (data[0].cnt == 1) {
+    if (data && data[0].cnt == 1) {
       connection.query(`DELETE FROM ${TABLE_NAME}`);
     }
   }
