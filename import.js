@@ -45,9 +45,18 @@ fs.readFile(`./source/${FILENAME}`, "utf8", function(err, data) {
   let data_length = records.length;
   records.forEach(record => {
     const values = Object.values(record);
-    const val_insert = "'" + values.join("', '") + "'";
+    let val_insert = '`' + values.join('`, `') + '`';
+
+    val_insert = val_insert.replace(/"/g, "'")
+    val_insert = val_insert.replace(/`/g, '"')
+
     const query = `INSERT INTO ${TABLE_NAME} (${col_insert}) VALUES (${val_insert})`;
-    connection.query(query, () => {
+    connection.query(query, (err, data) => {
+      if(err) {
+        console.log(query, record)
+        process.exit();
+      }
+
       data_length = data_length - 1;
       console.log(`Importing... (${data_length}) Record(s)`);
       console.clear();
