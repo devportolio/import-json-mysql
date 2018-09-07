@@ -38,7 +38,7 @@ fs.readFile(`./source/${FILENAME}`, "utf8", function(err, data) {
   const schema = columns.join("` TEXT, `");
 
   connection.query(
-    "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(`" + schema + "` CHAR);"
+    "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(`" + schema + "` TEXT);"
   );
 
   const col_insert = "`" + columns.join("`, `") + "`";
