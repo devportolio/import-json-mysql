@@ -22,10 +22,12 @@ process.argv.forEach(element => {
   }
 });
 
+let table_exists = false
 connection.query(
   `SELECT count(*) as cnt FROM information_schema.TABLES WHERE TABLE_NAME = '${TABLE_NAME}' AND TABLE_SCHEMA in (SELECT DATABASE());`,
   (err, data) => {
     if (data && data[0].cnt == 1) {
+      table_exists = true
       connection.query(`DELETE FROM ${TABLE_NAME}`);
     }
   }
@@ -37,9 +39,11 @@ fs.readFile(`./source/${FILENAME}`, "utf8", function(err, data) {
   const columns = Object.keys(records[0]);
   const schema = columns.join("` TEXT, `");
 
-  connection.query(
-    "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(`" + schema + "` TEXT);"
-  );
+  if(!table_exists) {
+    connection.query(
+      "CREATE TABLE " + TABLE_NAME + "(`" + schema + "` TEXT);"
+    );
+  }
 
   const col_insert = "`" + columns.join("`, `") + "`";
   let data_length = records.length;
