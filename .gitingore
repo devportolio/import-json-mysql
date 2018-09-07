@@ -1,2 +1,2 @@
 database.js
-*.json
+/source/*
